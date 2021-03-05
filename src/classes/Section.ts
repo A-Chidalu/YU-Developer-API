@@ -40,7 +40,7 @@ import { Day } from "../enums/Day";
         this.additionalNotes = "";
     }
 
-    set term(newTerm: string) {
+    set setTerm(newTerm: string) {
         this.term = newTerm;
     }
  }
