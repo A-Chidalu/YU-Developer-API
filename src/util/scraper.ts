@@ -1,7 +1,10 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
 import Subject from '../interfaces/Subject';
-import puppeteer from 'puppeteer';
+import puppeteer, { Browser, Page } from 'puppeteer';
+import config from '../config/config';
+import Section from '../classes/Section';
+import BroswerPage from '../interfaces/BrowserPage';
 
 
 
@@ -74,12 +77,12 @@ export const getCourseData = async (): Promise<void> => {
      */
     
     
-    const browser = await puppeteer.launch({
+    const browser: Browser = await puppeteer.launch({
         headless: false,
         slowMo: 300, // slow down by 250ms
     });
     
-    const page = await browser.newPage();
+    const page:Page = await browser.newPage();
     await page.goto("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/9/wo/yFQKbwyb7Ly90cOsTqVwjw/2.3.10.7");
     
     
@@ -99,6 +102,29 @@ export const getCourseData = async (): Promise<void> => {
 };
 
 export const scrapeInduvidualPage = async (): Promise<void> => {
+   const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/3/wo/onRlAXIIxoKJy5ibZIeS9M/3.3.10.8.3.0.0.5");
+
+   let currSection: Section = new Section();
    
+   //Get <tbody> that contains all the tables
+   const tBody = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[2]/tbody");
+   alert(tBody);
+   currBrowserPage.broswer.close();
+
+}
+
+const startBroswer = async (URL: string): Promise<BroswerPage> => {
+    const browser = await puppeteer.launch({
+        headless: false,
+        slowMo: 300, // slow down by 250ms
+    });
+    
+    const page = await browser.newPage();
+    await page.goto(URL);
+    
+    return {
+        broswer: browser,
+        page: page
+    };
 }
 
