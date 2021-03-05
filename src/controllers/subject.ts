@@ -13,3 +13,8 @@ export const getSubjects = async (req: Request, res: Response, next: NextFunctio
     const result = await scraper.getSubjectData(URL);
     res.json({subjects: result});
 }
+
+export const getCourseData = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    await scraper.getCourseData();
+    res.send("Some Data!");
+}

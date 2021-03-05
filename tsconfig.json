@@ -5,6 +5,11 @@
       "rootDir": "./",
       "outDir": "./build",
       "esModuleInterop": true,
-      "strict": true
+      "strict": true,
+      "lib": ["esnext", "dom"],
+      "noUnusedLocals": false,
+      "noUnusedParameters": false,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true
     }
   }

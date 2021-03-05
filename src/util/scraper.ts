@@ -1,6 +1,8 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
 import Subject from '../interfaces/Subject';
+import puppeteer from 'puppeteer';
+
 
 
 // const SUBJECTS_URL: string = process.env.SUBJECTS_URL || "https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/6/wo/4Z2NEPhlIWEVA3pxeFQ3Y0/0.3.10.21";
@@ -56,5 +58,47 @@ const getFacultyArrFromString = (facultyString: string): Array<string> => {
     facultyArr = facultyArr.map((ele) => ele.trim());
 
     return facultyArr;
+}
+
+export const getCourseData = async (): Promise<void> => {
+    //Table that contains all tables
+    ///html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[2]
+    
+    /**
+     * Table that holdes all the tables:
+     * /html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[2]
+     * 
+     * Table body <tbody> that holds each table:
+     * html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[2]
+     * 
+     */
+    
+    
+    const browser = await puppeteer.launch({
+        headless: false,
+        slowMo: 300, // slow down by 250ms
+    });
+    
+    const page = await browser.newPage();
+    await page.goto("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/9/wo/yFQKbwyb7Ly90cOsTqVwjw/2.3.10.7");
+    
+    
+    //1.Loop over and click each one of the courses
+    await page.$eval('#subjectSelect', (subjectSelectBox) => {            
+        Array.from(subjectSelectBox.children).forEach((child) => {
+            const SUBMIT_BTTN_NAME: string = "3.10.7.5";
+            child.setAttribute("selected", "true");
+            const submitBttn = document.getElementsByName(SUBMIT_BTTN_NAME)[0];
+            submitBttn.click();
+        })
+    })
+    
+
+    
+    browser.close();
+};
+
+export const scrapeInduvidualPage = async (): Promise<void> => {
+   
 }
 

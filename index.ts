@@ -9,6 +9,8 @@ const PORT: number = parseInt(config.port as string, 10) || 8080;
 
 app.get('/', subjectController.getSubjects);
 
+app.get('/courses/data', subjectController.getCourseData);
+
 
 app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
