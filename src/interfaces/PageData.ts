@@ -1,6 +1,6 @@
-import Section from './Section';
+import ClassTable from './ClassTable';
 export default interface PageData {
     courseName: string,
     courseDescription: string, 
-    sections: Array<Section>
+    pageTableData: Array<ClassTable>
 }

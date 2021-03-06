@@ -1,12 +1,12 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
 import Subject from '../interfaces/Subject';
-import puppeteer, { Browser, ElementHandle, Page } from 'puppeteer';
-import config from '../config/config';
-import Section from '../classes/Section';
+import puppeteer, { Browser, Page } from 'puppeteer';
 import BroswerPage from '../interfaces/BrowserPage';
-import { resolve } from 'node:path';
-import { rejects } from 'node:assert';
+import PageData from '../interfaces/PageData';
+import ClassTableRow from '../interfaces/ClassTableRow';
+import ClassTable from '../interfaces/ClassTable';
+
 
 
 
@@ -89,22 +89,33 @@ export const getCourseData = async (): Promise<void> => {
     browser.close();
 };
 
-export const scrapeInduvidualPage = async (): Promise<void> => {
+export const scrapeInduvidualPage = async (): Promise<Object> => {
     
-    const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/4/wo/oy8HPo0Xf0U2OzQ0ttg3q0/2.3.10.8.3.0.0.5");
+    const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/6/wo/BLtcAeDzapFHHGyYtHitsM/2.3.10.8.3.0.0.5");
     try{
-     
-        let currSection: Section = new Section();
+        //Get course name
+        const [courseNameElement] = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[1]/tbody/tr/td[1]/h1");
+        const courseName: string = await currBrowserPage.page.evaluate(parseSingleHTMLItem, courseNameElement); 
         
+        //Get course description
+        const [courseDescriptionElement] = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/p[3]");
+        const courseDescription: string = await currBrowserPage.page.evaluate(parseSingleHTMLItem, courseDescriptionElement); 
+
         //Get <tbody> that contains all the tables
         const [tBody] = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[2]/tbody");
-        const html = await currBrowserPage.page.evaluate(parseTableInfo, tBody);
-        console.log(html);
+        const pageTableData = await currBrowserPage.page.evaluate(parseTableInfo, tBody);
+        const result:PageData = {
+            courseName,
+            courseDescription,
+            pageTableData
+        }
         currBrowserPage.broswer.close();
+
+        return result;
    }catch(err){
         currBrowserPage.broswer.close();
         console.log(err);
-       return;
+       return err;
    }
 
 }
@@ -124,15 +135,15 @@ const startBroswer = async (URL: string): Promise<BroswerPage> => {
     };
 }
 
-const parseTableInfo = (tBody:Element): Promise<any> => {
-    const pageData:any = [];
+const parseTableInfo = (tBody:Element): Promise<Array<ClassTable>> => {
+    const pageTableData:Array<ClassTable> = [];
     try {
         Array.from(tBody.children).forEach((childRow:Element) => {
-            let tableData = {
+            let tableData: ClassTable = {
                 sectionTerm: "",
                 sectionLetter: "",
                 sectionDirector: "",
-                rowData: [] as any
+                rowInfo: [] as any
             }
             const sectionTermEle:Element|null = childRow.querySelector('td > table > tbody > tr > td > span > span');
             const sectionLetterEle:Element|null = childRow.querySelector('td > table > tbody > tr > td > span');
@@ -144,7 +155,7 @@ const parseTableInfo = (tBody:Element): Promise<any> => {
             tableData.sectionDirector = sectionDirectorEle?.innerHTML as string;
 
             for(let i = 1; i < mainTableElement!.children.length; i++) {
-                let tableRowObj = {
+                let tableRowObj: ClassTableRow = {
                     classType: "",
                     day: "",
                     startTime:"",
@@ -154,15 +165,16 @@ const parseTableInfo = (tBody:Element): Promise<any> => {
                     instructor: "",
                     notesOrAdditionalFees: ""
                 };
-                const currChild: Element = mainTableElement!.children[i];
-                const classTypeEle: Element|null = currChild.querySelector('td');
-                const dayOfTheWeekEle: Element|null = currChild.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(1)');
-                const startTimeEle: Element | null = currChild.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(2)');
-                const durationEle: Element | null = currChild.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(3)');
-                const locationEle: Element | null = currChild.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(4)');
-                const catNumEle: Element | null = currChild.querySelector('td:nth-child(3)');
-                const instructorEle: Element | null = currChild.querySelector('td:nth-child(4) > a');
-                const notesOrAdditionalFeesEle: Element | null = currChild.querySelector('td:nth-child(5)');
+                const currChildTableRow: Element = mainTableElement!.children[i];
+
+                const classTypeEle: Element|null = currChildTableRow.querySelector('td');
+                const dayOfTheWeekEle: Element|null = currChildTableRow.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(1)');
+                const startTimeEle: Element | null = currChildTableRow.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(2)');
+                const durationEle: Element | null = currChildTableRow.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(3)');
+                const locationEle: Element | null = currChildTableRow.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(4)');
+                const catNumEle: Element | null = currChildTableRow.querySelectorAll('td:nth-child(3)')[1];
+                const instructorEle: Element | null = currChildTableRow.querySelector('td:nth-child(4) > a');
+                const notesOrAdditionalFeesEle: Element | null = currChildTableRow.querySelector('td:nth-child(5)');
                 tableRowObj.classType = classTypeEle?.innerHTML as string;
                 tableRowObj.day = dayOfTheWeekEle?.innerHTML as string;
                 tableRowObj.startTime = startTimeEle?.innerHTML as string;
@@ -172,21 +184,24 @@ const parseTableInfo = (tBody:Element): Promise<any> => {
                 tableRowObj.instructor = instructorEle?.innerHTML as string;
                 tableRowObj.notesOrAdditionalFees = notesOrAdditionalFeesEle?.innerHTML as string;
         
-                tableData.rowData.push(tableRowObj);
+                tableData.rowInfo.push(tableRowObj);
             }
-            // alert(sectionTermEle && sectionTermEle.innerHTML);
-            // alert(sectionLetterEle && sectionLetterEle.innerHTML);
-            // alert(sectionDirectorEle && sectionDirectorEle.innerHTML);
-            // alert(mainTableElement && mainTableElement.innerHTML);
-            //alert(JSON.stringify(tableData));
-            pageData.push(tableData);
+            pageTableData.push(tableData);
         });
     }
     catch(err) {
         alert(err);
     }
     return new Promise((resolve) => {
-        resolve(pageData);
+        resolve(pageTableData);
+    });
+}
+
+
+const parseSingleHTMLItem = (singleHTMLItem: Element): Promise<string> => {
+    const singleHTMLItemText: string = singleHTMLItem.innerHTML as string;
+    return new Promise((resolve) => {
+        resolve(singleHTMLItemText);
     });
 }
 

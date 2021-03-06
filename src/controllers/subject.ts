@@ -15,6 +15,6 @@ export const getSubjects = async (req: Request, res: Response, next: NextFunctio
 }
 
 export const getCourseData = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    await scraper.scrapeInduvidualPage();
-    res.send("Some Data!");
+    const result = await scraper.scrapeInduvidualPage();
+    res.json({data: result});
 }
