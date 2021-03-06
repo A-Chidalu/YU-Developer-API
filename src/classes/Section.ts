@@ -1,17 +1,3 @@
-/**
- * export default interface Section {
-    term: string,
-    sectionLetter: string,
-    sectionDirector: string,
-    classType: string,
-    day: string,
-    startTime: string,
-    duration: number,
-    catNum: string,
-    instructor: string,
-    additionalNotes: string
-}
- */
 
 import { Day } from "../enums/Day";
 
@@ -22,6 +8,7 @@ import { Day } from "../enums/Day";
     classType: string;
     day: Day;
     startTime: string;
+    location: string;
     duration: number;
     catNum: string;
     instructor: string;
@@ -34,6 +21,7 @@ import { Day } from "../enums/Day";
         this.classType = "";
         this.day = Day.MON;
         this.startTime = "00:00";
+        this.location = "";
         this.duration = 0;
         this.catNum = "xxx111"
         this.instructor = "Jane Doe";
