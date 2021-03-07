@@ -89,9 +89,9 @@ export const getCourseData = async (): Promise<void> => {
     browser.close();
 };
 
-export const scrapeInduvidualPage = async (): Promise<Object> => {
+export const scrapeInduvidualPage = async (): Promise<PageData> => {
     
-    const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/6/wo/BLtcAeDzapFHHGyYtHitsM/2.3.10.8.3.0.0.5");
+    const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/5/wo/U3Rtg1CUyjDNySEulsaVJw/6.3.10.8.3.6.0.5");
     try{
         //Get course name
         const [courseNameElement] = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[1]/tbody/tr/td[1]/h1");
@@ -137,22 +137,29 @@ const startBroswer = async (URL: string): Promise<BroswerPage> => {
 
 const parseTableInfo = (tBody:Element): Promise<Array<ClassTable>> => {
     const pageTableData:Array<ClassTable> = [];
+    let tableCount: number = 0;
     try {
-        Array.from(tBody.children).forEach((childRow:Element) => {
+        Array.from(tBody.children).forEach((table:Element) => {
+            tableCount++;
             let tableData: ClassTable = {
                 sectionTerm: "",
                 sectionLetter: "",
                 sectionDirector: "",
                 rowInfo: [] as any
             }
-            const sectionTermEle:Element|null = childRow.querySelector('td > table > tbody > tr > td > span > span');
-            const sectionLetterEle:Element|null = childRow.querySelector('td > table > tbody > tr > td > span');
-            const sectionDirectorEle:Element|null = childRow.querySelector('td > table > tbody > tr:nth-child(2) > td');
-            const mainTableElement:Element|null = childRow.querySelector('td > table > tbody > tr:nth-child(3) > td > table > tbody');
 
-            tableData.sectionTerm = sectionTermEle?.innerHTML as string;
-            tableData.sectionLetter = sectionLetterEle?.innerHTML as string;
-            tableData.sectionDirector = sectionDirectorEle?.innerHTML as string;
+            const sectionTermEle:Element|null = table.querySelector('td > table > tbody > tr:nth-child(1) > td:nth-child(1) > span > span') || null;
+            const sectionLetterEle:Element|null = table.querySelector('td > table > tbody > tr:nth-child(1) > td:nth-child(1) > span') || null;
+            const sectionDirectorEle:Element|null = table.querySelector('td > table > tbody > tr:nth-child(2) > td') || null;
+            tableData.sectionTerm = sectionTermEle?.innerHTML as string || "";
+            tableData.sectionLetter = sectionLetterEle?.innerHTML as string || "";
+            tableData.sectionDirector = sectionDirectorEle?.innerHTML as string || "";
+
+            let mainTableElement:Element|null = table.querySelector("td > table > tbody > tr:nth-child(3) > td > table > tbody");
+            if(tableCount === 3) { //WORKAROUND: Table is never correct on the third table of each page, assining it manually
+                mainTableElement = document.querySelector("body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td > table:nth-child(9) > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(3) > td > table > tbody");
+            }
+
 
             for(let i = 1; i < mainTableElement!.children.length; i++) {
                 let tableRowObj: ClassTableRow = {
@@ -167,22 +174,32 @@ const parseTableInfo = (tBody:Element): Promise<Array<ClassTable>> => {
                 };
                 const currChildTableRow: Element = mainTableElement!.children[i];
 
-                const classTypeEle: Element|null = currChildTableRow.querySelector('td');
+                const classTypeEle: Element|null = currChildTableRow.querySelector('td:nth-child(1)');
                 const dayOfTheWeekEle: Element|null = currChildTableRow.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(1)');
                 const startTimeEle: Element | null = currChildTableRow.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(2)');
                 const durationEle: Element | null = currChildTableRow.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(3)');
                 const locationEle: Element | null = currChildTableRow.querySelector('td:nth-child(2) > table > tbody > tr > td:nth-child(4)');
-                const catNumEle: Element | null = currChildTableRow.querySelectorAll('td:nth-child(3)')[1];
+                const catNumEle: Element | null = currChildTableRow.querySelectorAll('td:nth-child(3)')[1]; //.querySelectorAll()
                 const instructorEle: Element | null = currChildTableRow.querySelector('td:nth-child(4) > a');
                 const notesOrAdditionalFeesEle: Element | null = currChildTableRow.querySelector('td:nth-child(5)');
-                tableRowObj.classType = classTypeEle?.innerHTML as string;
-                tableRowObj.day = dayOfTheWeekEle?.innerHTML as string;
-                tableRowObj.startTime = startTimeEle?.innerHTML as string;
-                tableRowObj.duration = durationEle?.innerHTML as string;
-                tableRowObj.location = locationEle?.innerHTML as string;
-                tableRowObj.catNum = catNumEle?.innerHTML as string;
-                tableRowObj.instructor = instructorEle?.innerHTML as string;
-                tableRowObj.notesOrAdditionalFees = notesOrAdditionalFeesEle?.innerHTML as string;
+                // const allRowInfoArr: NodeListOf<HTMLTableDataCellElement> = currChildTableRow.querySelectorAll('td');
+                // const classTypeEle: Element|null = allRowInfoArr[0];
+                // const dayOfTheWeekEle: Element|null = allRowInfoArr[2];
+                // const startTimeEle: Element | null = allRowInfoArr[3];
+                // const durationEle: Element | null = allRowInfoArr[4];
+                // const locationEle: Element | null = allRowInfoArr[5];
+                // const catNumEle: Element | null = allRowInfoArr[6];
+                // const instructorEle: Element | null = allRowInfoArr[7];
+                // const notesOrAdditionalFeesEle: Element | null = allRowInfoArr[8];
+
+                tableRowObj.classType = classTypeEle?.innerHTML as string || "";
+                tableRowObj.day = dayOfTheWeekEle?.innerHTML as string || "";
+                tableRowObj.startTime = startTimeEle?.innerHTML as string || "";
+                tableRowObj.duration = durationEle?.innerHTML as string || "";
+                tableRowObj.location = locationEle?.innerHTML as string || "";
+                tableRowObj.catNum = catNumEle?.innerHTML as string || "";
+                tableRowObj.instructor = instructorEle?.innerHTML as string || "";
+                tableRowObj.notesOrAdditionalFees = notesOrAdditionalFeesEle?.innerHTML as string || "";
         
                 tableData.rowInfo.push(tableRowObj);
             }
