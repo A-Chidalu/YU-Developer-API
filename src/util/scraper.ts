@@ -90,8 +90,11 @@ export const getCourseData = async (): Promise<void> => {
 };
 
 export const scrapeInduvidualPage = async (): Promise<PageData> => {
-    
-    const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/5/wo/U3Rtg1CUyjDNySEulsaVJw/6.3.10.8.3.6.0.5");
+    const FACULTY: string = "";
+    const SUBJECT: string = "";
+    let SPECFIC_PAGE_URL: string = `https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/wa/crsq1?faculty=${FACULTY}&subject=${SUBJECT}`
+
+    const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/6/wo/Y8shx5SpfuFKTmskrcinPg/2.3.10.8.3.5.0.5");
     try{
         //Get course name
         const [courseNameElement] = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[1]/tbody/tr/td[1]/h1");
