@@ -6,6 +6,8 @@ import BroswerPage from '../interfaces/BrowserPage';
 import PageData from '../interfaces/PageData';
 import ClassTableRow from '../interfaces/ClassTableRow';
 import ClassTable from '../interfaces/ClassTable';
+import CourseFaculty from '../interfaces/CourseFaculty';
+import * as fwCoursesData from '../../data/fwCourses.json';
 
 
 
@@ -33,6 +35,20 @@ export const getSubjectData = async(SUBJECT_URL: string): Promise<Array<Subject>
     catch(err) {
         return err;
     }
+}
+
+const writeAllCoursesToDB = async(): Promise<void> => {
+    const fwCoursesArr: Array<CourseFaculty> = fwCoursesData.data;
+
+    fwCoursesArr.forEach(courseFaculty => {
+        const FACULTY: string = courseFaculty.faculty;
+        const SUBJECT: string = courseFaculty.courseID;
+        const STUDY_SESSION: string = "fw";
+        let SPECFIC_PAGE_URL: string = `https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/wa/crsq1?faculty=${FACULTY}&subject=${SUBJECT}&studysession=${STUDY_SESSION}`
+
+        
+    })
+
 }
 
 const parseSubject = (currSubject: string): Subject => {
@@ -92,9 +108,10 @@ export const getCourseData = async (): Promise<void> => {
 export const scrapeInduvidualPage = async (): Promise<PageData> => {
     const FACULTY: string = "";
     const SUBJECT: string = "";
-    let SPECFIC_PAGE_URL: string = `https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/wa/crsq1?faculty=${FACULTY}&subject=${SUBJECT}`
+    const STUDY_SESSION: string = "";
+    let SPECFIC_PAGE_URL: string = `https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/wa/crsq1?faculty=${FACULTY}&subject=${SUBJECT}&studysession=${STUDY_SESSION}`
 
-    const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/6/wo/Y8shx5SpfuFKTmskrcinPg/2.3.10.8.3.5.0.5");
+    const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/3/wo/GRs0btCbmnTkcvja6r6xv0/2.3.10.8.3.1.0.5");
     try{
         //Get course name
         const [courseNameElement] = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[1]/tbody/tr/td[1]/h1");
@@ -123,6 +140,24 @@ export const scrapeInduvidualPage = async (): Promise<PageData> => {
 
 }
 
+export const scrapeAllCoursesAndFaculty = async (): Promise<Array<CourseFaculty>> => {
+    const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/9/wo/bdC05ySbIixC6UitbTTrX0/1.3.10.7");
+    let result: Array<CourseFaculty> = [];
+    try {
+        //Get course name
+        const [courseSelectTable] = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/form/table/tbody/tr[2]/td[2]/select");
+        const selectTableArr: Array<CourseFaculty> = await currBrowserPage.page.evaluate(parseSelectTableArr, courseSelectTable); 
+        result = selectTableArr;
+        
+    } catch(err) {
+        currBrowserPage.broswer.close();
+        console.log(err);
+    }
+
+    return result;
+
+}
+
 const startBroswer = async (URL: string): Promise<BroswerPage> => {
     const browser = await puppeteer.launch({
         headless: false,
@@ -136,6 +171,26 @@ const startBroswer = async (URL: string): Promise<BroswerPage> => {
         broswer: browser,
         page: page
     };
+}
+
+const parseSelectTableArr = (selectTable: Element): Promise<Array<CourseFaculty>> => {
+    const result: Array<CourseFaculty> = [];
+    try {
+        Array.from(selectTable.children).forEach((option:Element) => {
+            const optionString: string = option?.innerHTML as string || "";
+            const optionArr: Array<String> = optionString.split("-");
+            const course: string = optionArr[0].trim();
+            const faculties: string = optionArr[2].trim();
+
+            result.push({faculty: faculties, courseID: course});
+        });
+    }
+    catch(err) {
+        alert(err);
+    }
+    return new Promise((resolve) => {
+        resolve(result);
+    });
 }
 
 const parseTableInfo = (tBody:Element): Promise<Array<ClassTable>> => {

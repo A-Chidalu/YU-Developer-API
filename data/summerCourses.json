@@ -1,0 +1,592 @@
+{
+    "data": [
+        {
+            "faculty": "SB",
+            "courseID": "ACTG"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "ADLW"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "ADMB"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "ADMS"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "ALDR"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "ANTH"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "ARB"
+        },
+        {
+            "faculty": "FA",
+            "courseID": "ARTH"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "ARTM"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "ASL"
+        },
+        {
+            "faculty": "ED",
+            "courseID": "AUCO"
+        },
+        {
+            "faculty": "SC",
+            "courseID": "BC"
+        },
+        {
+            "faculty": "SC",
+            "courseID": "BCHM"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "BIOL"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "BLIS"
+        },
+        {
+            "faculty": "SC",
+            "courseID": "BPHS"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "BSUS"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "CCLW"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "CCY"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "CDIS"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "CH"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "CHEM"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "CIVL"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "CLST"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "CLTC"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "CLTR"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "CLWP"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "CMCT"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "COGS"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "COMN"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "COMS"
+        },
+        {
+            "faculty": "LE",
+            "courseID": "COOP"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "CRIM"
+        },
+        {
+            "faculty": "FA",
+            "courseID": "DANC"
+        },
+        {
+            "faculty": "FA",
+            "courseID": "DATT"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "DEMS"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "DIGM"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "DRCA"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "DRST"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "ECON"
+        },
+        {
+            "faculty": "ED",
+            "courseID": "EDFE"
+        },
+        {
+            "faculty": "ED",
+            "courseID": "EDJI"
+        },
+        {
+            "faculty": "ED",
+            "courseID": "EDPJ"
+        },
+        {
+            "faculty": "ED",
+            "courseID": "EDPR"
+        },
+        {
+            "faculty": "ED",
+            "courseID": "EDST"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "EDUC"
+        },
+        {
+            "faculty": "LE",
+            "courseID": "EECS"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "EIL"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "EN"
+        },
+        {
+            "faculty": "LE",
+            "courseID": "ENG"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "ENTR"
+        },
+        {
+            "faculty": "SC",
+            "courseID": "ENVB"
+        },
+        {
+            "faculty": "EU",
+            "courseID": "ENVS"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "ESL"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "ESS"
+        },
+        {
+            "faculty": "LE",
+            "courseID": "ESSE"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "EXCH"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "FACC"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "FILM"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "FINE"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "FNEN"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "FNSV"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "FR"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "FRAN"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "FREN"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "FSL"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "GCIN"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "GEOG"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "GFWS"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "GNRL"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "GWST"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "HIMP"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "HIST"
+        },
+        {
+            "faculty": "HH",
+            "courseID": "HLST"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "HREQ"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "HRM"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "HUMA"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "IBUS"
+        },
+        {
+            "faculty": "HH",
+            "courseID": "IHST"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "ILST"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "IMBA"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "INDG"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "INST"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "INTE"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "INTL"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "IT"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "ITEC"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "KAHS"
+        },
+        {
+            "faculty": "HH",
+            "courseID": "KINE"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "KOR"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "LAL"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "LASO"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "LAW"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "LAWB"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "LAWH"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "LAWL"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "LIN"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "LING"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "LREL"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "MACC"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "MATH"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "MBAN"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "MECH"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "MFIN"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "MGMT"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "MINE"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "MIST"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "MKTG"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "MMAI"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "MODR"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "MSTM"
+        },
+        {
+            "faculty": "FA",
+            "courseID": "MUSI"
+        },
+        {
+            "faculty": "SC",
+            "courseID": "NATS"
+        },
+        {
+            "faculty": "HH",
+            "courseID": "NURS"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "OMIS"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "ORGS"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "OVGS"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "PACC"
+        },
+        {
+            "faculty": "FA",
+            "courseID": "PANF"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "PCS"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "PHIL"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "PHYS"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "PIA"
+        },
+        {
+            "faculty": "HH",
+            "courseID": "PKIN"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "POLS"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "PPAL"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "PPAS"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "PROP"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "PSYC"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "SGMT"
+        },
+        {
+            "faculty": "Legal Studies",
+            "courseID": "SLST"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "SOCI"
+        },
+        {
+            "faculty": "SB",
+            "courseID": "SOCM"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "SOSC"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "SOWK"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "SP"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "SPTH"
+        },
+        {
+            "faculty": "SC",
+            "courseID": "STS"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "SXST"
+        },
+        {
+            "faculty": "FA",
+            "courseID": "THEA"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "THST"
+        },
+        {
+            "faculty": "GL",
+            "courseID": "TRAN"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "TRAS"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "TXLW"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "VISA"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "WRIT"
+        },
+        {
+            "faculty": "FA",
+            "courseID": "YSDN"
+        }
+    ]
+}

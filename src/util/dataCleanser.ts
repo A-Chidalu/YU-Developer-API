@@ -1,6 +1,7 @@
 import ClassTable from "../interfaces/ClassTable";
 import ClassTableRow from "../interfaces/ClassTableRow";
 import PageData from "../interfaces/PageData";
+import CourseFaculty from '../interfaces/CourseFaculty';
 
 
 export const cleanInduvidualPageData = (data: PageData): void => {
@@ -53,7 +54,7 @@ const cleanTable = (table: ClassTable): void => {
 
 }
 
-const cleanTableRow  = (tableRow: ClassTableRow): void => {
+const cleanTableRow = (tableRow: ClassTableRow): void => {
 
     //Clean ClassType
     tableRow.classType = tableRow.classType?.trim().replace(/  /g, ' ');
@@ -75,5 +76,34 @@ const cleanTableRow  = (tableRow: ClassTableRow): void => {
     tableRow.notesOrAdditionalFees = tableRow.notesOrAdditionalFees?.trim().replace(/&nbsp;/g, '');
     tableRow.notesOrAdditionalFees = tableRow.notesOrAdditionalFees?.replace(/[\r\n]/g, '');
 
+}
 
+export const cleanFaculty = (courseFacultyArr: Array<CourseFaculty>): Array<CourseFaculty> => {
+
+    let result: Array<CourseFaculty> = [];
+
+    courseFacultyArr.forEach(element => {
+        const tempObj:CourseFaculty = {
+            faculty: getFirstFaculty(element),
+            courseID: element.courseID
+        }
+        result.push(tempObj); 
+    })
+
+    return result;
+
+    function getFirstFaculty(element: CourseFaculty): string {
+        let facultyString: string = element.faculty;
+        facultyString = facultyString.replace(/(\(|\))/gmi, "");
+        facultyString = facultyString.trim();
+        console.log(facultyString);
+        if(facultyString.length > 2) {
+            let facultyArr = facultyString.split(",");
+            return facultyArr[0];
+        }
+        else {
+            return facultyString;
+        }
+
+    }
 }

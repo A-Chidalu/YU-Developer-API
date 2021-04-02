@@ -11,6 +11,8 @@ app.get('/', subjectController.getSubjects);
 
 app.get('/courses/data', subjectController.getCourseData);
 
+app.get('/coursesAndFaculty', subjectController.getCourseAndFacultyData);
+
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at https://localhost:${PORT}`);
