@@ -13,6 +13,8 @@ app.get('/courses/data', subjectController.getCourseData);
 
 app.get('/coursesAndFaculty', subjectController.getCourseAndFacultyData);
 
+app.get('/write', subjectController.writeStuffToDB);
+
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at https://localhost:${PORT}`);

@@ -8,6 +8,8 @@ import ClassTableRow from '../interfaces/ClassTableRow';
 import ClassTable from '../interfaces/ClassTable';
 import CourseFaculty from '../interfaces/CourseFaculty';
 import * as fwCoursesData from '../../data/fwCourses.json';
+import * as dataCleanser from './dataCleanser';
+import { resolve } from 'node:path';
 
 
 
@@ -37,18 +39,78 @@ export const getSubjectData = async(SUBJECT_URL: string): Promise<Array<Subject>
     }
 }
 
-const writeAllCoursesToDB = async(): Promise<void> => {
+export const writeAllCoursesToDB = async(): Promise<void> => {
     const fwCoursesArr: Array<CourseFaculty> = fwCoursesData.data;
+    const broswer:  Browser = await puppeteer.launch({
+        headless: false,
+        slowMo: 250, // slow down by 250ms
+    });
+    const page: Page = await broswer.newPage();
+    
 
-    fwCoursesArr.forEach(courseFaculty => {
+
+    fwCoursesArr.forEach(async courseFaculty => {
         const FACULTY: string = courseFaculty.faculty;
         const SUBJECT: string = courseFaculty.courseID;
         const STUDY_SESSION: string = "fw";
         let SPECFIC_PAGE_URL: string = `https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/wa/crsq1?faculty=${FACULTY}&subject=${SUBJECT}&studysession=${STUDY_SESSION}`
+        await page.goto(SPECFIC_PAGE_URL);
 
-        
+        try{
+            let courseLinkURLS: Array<string> = [];
+            //Get course name
+            const [courseTbody] = await page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[2]/tbody");
+            courseLinkURLS = await page.evaluate(getAllCourseLinksFromPage, courseTbody); 
+
+            
+            const forEachLoopDone = new Promise((resolve, reject) => {
+                let index = 0;
+                courseLinkURLS.forEach(async link => {
+                    const result: PageData = await scrapeInduvidualPage("https://w2prod.sis.yorku.ca" + link, broswer);
+                    dataCleanser.cleanInduvidualPageData(result);
+                    console.log(result);
+                    index++;
+                    if(index === courseLinkURLS.length) {
+                        resolve(1);
+                    }
+                });
+           })
+
+           forEachLoopDone.then(async () => {
+               //console.log("\n" + "\n" + "\n" + "\n" + "\n" + "\n" + "COOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL" + "\n" + "\n" + "\n" + "\n" + "\n");
+               try{
+                   await broswer.close();
+               } catch(err){
+                   console.log("lol");
+               }
+           })
+
+
+        } catch(err){
+            console.log(err);
+            await page.close();
+            await broswer.close();
+        }
+        finally {
+           
+        }
+
     })
 
+    
+
+
+}
+
+const getAllCourseLinksFromPage = (courseTbody: Element): Array<string> => {
+    let result: Array<string> = [];
+
+    for(let i = 1; i < courseTbody.children.length; i++) {
+        const tableRow: Element = courseTbody.children[i];
+        result.push(tableRow.querySelector('td:nth-child(3) > a')?.getAttribute("href") as string)
+    }
+
+    return result;
 }
 
 const parseSubject = (currSubject: string): Subject => {
@@ -82,7 +144,7 @@ const getFacultyArrFromString = (facultyString: string): Array<string> => {
 
 export const getCourseData = async (): Promise<void> => {
     const browser: Browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         slowMo: 300, // slow down by 250ms
     });
     
@@ -105,37 +167,42 @@ export const getCourseData = async (): Promise<void> => {
     browser.close();
 };
 
-export const scrapeInduvidualPage = async (): Promise<PageData> => {
+export const scrapeInduvidualPage = async (link: string = "", broswer: Browser): Promise<PageData> => {
     const FACULTY: string = "";
     const SUBJECT: string = "";
     const STUDY_SESSION: string = "";
     let SPECFIC_PAGE_URL: string = `https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/wa/crsq1?faculty=${FACULTY}&subject=${SUBJECT}&studysession=${STUDY_SESSION}`
 
-    const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/3/wo/GRs0btCbmnTkcvja6r6xv0/2.3.10.8.3.1.0.5");
+    //const currBrowserPage: BroswerPage = await startBroswer(link || "https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/3/wo/GRs0btCbmnTkcvja6r6xv0/2.3.10.8.3.1.0.5");
+    const page: Page = await broswer.newPage();
+    await page.goto(link);
     try{
         //Get course name
-        const [courseNameElement] = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[1]/tbody/tr/td[1]/h1");
-        const courseName: string = await currBrowserPage.page.evaluate(parseSingleHTMLItem, courseNameElement); 
+        const [courseNameElement] = await page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[1]/tbody/tr/td[1]/h1");
+        const courseName: string = await page.evaluate(parseSingleHTMLItem, courseNameElement); 
         
         //Get course description
-        const [courseDescriptionElement] = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/p[3]");
-        const courseDescription: string = await currBrowserPage.page.evaluate(parseSingleHTMLItem, courseDescriptionElement); 
+        const [courseDescriptionElement] = await page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/p[3]");
+        const courseDescription: string = await page.evaluate(parseSingleHTMLItem, courseDescriptionElement); 
 
         //Get <tbody> that contains all the tables
-        const [tBody] = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[2]/tbody");
-        const pageTableData = await currBrowserPage.page.evaluate(parseTableInfo, tBody);
+        const [tBody] = await page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[2]/tbody");
+        const pageTableData = await page.evaluate(parseTableInfo, tBody);
         const result:PageData = {
             courseName,
             courseDescription,
             pageTableData
         }
-        currBrowserPage.broswer.close();
+        //broswer.close();
 
         return result;
    }catch(err){
-        currBrowserPage.broswer.close();
+        broswer.close();
         console.log(err);
        return err;
+   }
+   finally{
+       await page.close();
    }
 
 }

@@ -18,9 +18,9 @@ export const getSubjects = async (req: Request, res: Response, next: NextFunctio
 }
 
 export const getCourseData = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const result:PageData = await scraper.scrapeInduvidualPage();
-    dataCleanser.cleanInduvidualPageData(result);
-    res.json({data: result});
+    //const result:PageData = await scraper.scrapeInduvidualPage();
+    //dataCleanser.cleanInduvidualPageData(result);
+    //res.json({data: result});
 }
 
 export const getCourseAndFacultyData = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -28,3 +28,9 @@ export const getCourseAndFacultyData = async (req: Request, res: Response, next:
     result = dataCleanser.cleanFaculty(result);
     res.json({data: result});
 }
+
+export const writeStuffToDB = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    await scraper.writeAllCoursesToDB();
+    res.send('That was nice!');
+}
+

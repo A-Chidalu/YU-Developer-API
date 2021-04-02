@@ -38,14 +38,20 @@ const cleanTable = (table: ClassTable): void => {
      * 
      * Example: "<a href=\"/Apps/WebObjects/cdm.woa/wa/loginppy?url=/Apps/WebObjects/cdm.woa/6/wo/BLtcAeDzapFHHGyYtHitsM/2.3.10.8.3.0.0.5\">Please click here to see availability.<br></a>Section Director: Qian Sandy Qu&nbsp;&nbsp;&nbsp;"
      */
-    let lowerIdx:number = table.sectionDirector.indexOf('Section Director');
-    table.sectionDirector = table.sectionDirector.slice(lowerIdx);
-    let upperIdx:number = table.sectionDirector.indexOf('&nbsp;');
-    if(upperIdx > 0) {
-        table.sectionDirector = table.sectionDirector.substr(0, upperIdx);
-        splitArr = table.sectionDirector.split(": ");
-        table.sectionDirector = splitArr[1];
+    if(table.sectionDirector.includes('Not Available')) {
+        table.sectionDirector = 'Section Director: Not Available';
     }
+    else{
+        let lowerIdx:number = table.sectionDirector.indexOf('Section Director');
+        table.sectionDirector = table.sectionDirector.slice(lowerIdx);
+        let upperIdx:number = table.sectionDirector.indexOf('&nbsp;');
+        if(upperIdx > 0) {
+            table.sectionDirector = table.sectionDirector.substr(0, upperIdx);
+            splitArr = table.sectionDirector.split(": ");
+            table.sectionDirector = splitArr[1];
+        }
+    }
+
 
 
     //Clean All the rows in the table
