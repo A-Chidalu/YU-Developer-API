@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import cheerio from 'cheerio';
-import CourseFaculty from '../interfaces/CourseFaculty';
 import * as LinkUtil from './LinkUtils';
 import * as fwCoursesData from '../../data/fwCoursesCopy.json';
 import CourseFacultyOld from '../interfaces/CourseFacultyOld';
@@ -25,7 +24,7 @@ const grabMissedCourse = async (courseFaculty: CourseFacultyOld): Promise<void> 
 
    const specificCoursePage: AxiosResponse<any> = await axios.get(link);
    $ = cheerio.load(specificCoursePage.data);
-   
+
 
 
 
