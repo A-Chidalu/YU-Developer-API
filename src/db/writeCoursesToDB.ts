@@ -3,7 +3,7 @@ AWS.config.update({region:'us-east-2'});
 
 var dynamodb = new AWS.DynamoDB();
 
-const writeCourseToDB = (courseJSON) => {
+export const writeCourseToDB = (courseJSON: any) => {
     if(!courseJSON) return;
 
     const result = convertResultToMarshelledJSON(courseJSON);
@@ -15,33 +15,34 @@ const writeCourseToDB = (courseJSON) => {
 
     console.log(params);
 
-    // dynamodb.putItem(params, (err, data) => {
-    //     if(err) {
-    //         console.log(err);
-    //     }
-    //     else {
-    //         console.log("Success:", data);
-    //     }
-    // })
+    dynamodb.putItem(params, (err: any, data: any) => {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            console.log("Success:", data);
+        }
+    })
 }
 
-const convertResultToMarshelledJSON = (scrapedResult) => {
+const convertResultToMarshelledJSON = (scrapedResult: any) => {
     if(!scrapedResult) return;
     
     if(typeof scrapedResult === "string" ) {
         scrapedResult = JSON.parse(scrapedResult);
     }
     let courseItem =  {
-        CourseID: getCourseIDFromCourseName(scrapedResult.data.courseName),
-        courseName: scrapedResult.data.courseName,
-        courseDescription: scrapedResult.data.courseDescription,
-        sections: scrapedResult.data.pageTableData
+        CourseID: getCourseIDFromCourseName(scrapedResult.courseName),
+        courseName: scrapedResult.courseName,
+        courseDescription: scrapedResult.courseDescription,
+        studySession: "FW",
+        sections: scrapedResult.pageTableData
     };
 
     return AWS.DynamoDB.Converter.marshall(courseItem);
 }
 
-const getCourseIDFromCourseName = (courseName) => {
+const getCourseIDFromCourseName = (courseName: any) => {
     if(!courseName) {
         return;
     }
@@ -57,6 +58,8 @@ const getCourseIDFromCourseName = (courseName) => {
 
     return result.replace(" ", "");
 }
+
+
 
 
 

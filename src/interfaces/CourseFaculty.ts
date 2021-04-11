@@ -1,4 +1,4 @@
 export default interface CourseFaculty {
-    faculty: string,
+    faculty: Array<string>,
     courseID: string
 }

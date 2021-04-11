@@ -90,7 +90,7 @@ export const cleanFaculty = (courseFacultyArr: Array<CourseFaculty>): Array<Cour
 
     courseFacultyArr.forEach(element => {
         const tempObj:CourseFaculty = {
-            faculty: getFirstFaculty(element),
+            faculty: getFirstFaculty(element.faculty),
             courseID: element.courseID
         }
         result.push(tempObj); 
@@ -98,8 +98,8 @@ export const cleanFaculty = (courseFacultyArr: Array<CourseFaculty>): Array<Cour
 
     return result;
 
-    function getFirstFaculty(element: CourseFaculty): string {
-        let facultyString: string = element.faculty;
+    function getFirstFaculty(facultyString: string): string {
+        let facultyString: string = facultyString
         facultyString = facultyString.replace(/(\(|\))/gmi, "");
         facultyString = facultyString.trim();
         console.log(facultyString);

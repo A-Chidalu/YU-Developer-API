@@ -3,6 +3,14 @@
         {
             "faculty": "SB",
             "courseID": "ACTG"
+        },
+        {
+            "faculty": "GS",
+            "courseID": "ADLW"
+        },
+        {
+            "faculty": "AP",
+            "courseID": "ADMS"
         }
     ]
 }

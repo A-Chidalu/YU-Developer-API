@@ -7,9 +7,10 @@ import PageData from '../interfaces/PageData';
 import ClassTableRow from '../interfaces/ClassTableRow';
 import ClassTable from '../interfaces/ClassTable';
 import CourseFaculty from '../interfaces/CourseFaculty';
+import CourseFacultyOld from '../interfaces/CourseFacultyOld';
 import * as fwCoursesData from '../../data/fwCourses.json';
 import * as dataCleanser from './dataCleanser';
-import { resolve } from 'node:path';
+import * as dynamoWriter from '../db/writeCoursesToDB';
 
 
 
@@ -40,64 +41,53 @@ export const getSubjectData = async(SUBJECT_URL: string): Promise<Array<Subject>
 }
 
 export const writeAllCoursesToDB = async(): Promise<void> => {
-    const fwCoursesArr: Array<CourseFaculty> = fwCoursesData.data;
-    const broswer:  Browser = await puppeteer.launch({
-        headless: false,
-        slowMo: 250, // slow down by 250ms
-    });
-    const page: Page = await broswer.newPage();
+    try {
+        const fwCoursesArr: Array<CourseFacultyOld> = fwCoursesData.data;
+        const broswer:  Browser = await puppeteer.launch({
+            headless: false,
+            slowMo: 250, // slow down by 250ms
+        });
+        const page: Page = await broswer.newPage();
     
-
-
-    fwCoursesArr.forEach(async courseFaculty => {
-        const FACULTY: string = courseFaculty.faculty;
-        const SUBJECT: string = courseFaculty.courseID;
-        const STUDY_SESSION: string = "fw";
-        let SPECFIC_PAGE_URL: string = `https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/wa/crsq1?faculty=${FACULTY}&subject=${SUBJECT}&studysession=${STUDY_SESSION}`
-        await page.goto(SPECFIC_PAGE_URL);
-
-        try{
-            let courseLinkURLS: Array<string> = [];
-            //Get course name
-            const [courseTbody] = await page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[2]/tbody");
-            courseLinkURLS = await page.evaluate(getAllCourseLinksFromPage, courseTbody); 
-
-            
-            const forEachLoopDone = new Promise((resolve, reject) => {
-                let index = 0;
+        
+        for(let courseFaculty of fwCoursesArr) {
+            const FACULTY: string = courseFaculty.faculty;
+            let SUBJECT: string = courseFaculty.courseID;
+            //Pad the subject property to properly use the YORK api, needs subjects to have a length of 4
+            SUBJECT = SUBJECT.padEnd(4, " ");
+            const STUDY_SESSION: string = "fw";
+            let SPECFIC_PAGE_URL: string = `https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/wa/crsq1?faculty=${FACULTY}&subject=${SUBJECT}&studysession=${STUDY_SESSION}`
+            await page.goto(SPECFIC_PAGE_URL);
+        
+            try{
+                let courseLinkURLS: Array<string> = [];
+                //Get course name
+                const [courseTbody] = await page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[2]/tbody");
+                
+                if(!courseTbody) continue;
+                
+                courseLinkURLS = await page.evaluate(getAllCourseLinksFromPage, courseTbody); 
                 courseLinkURLS.forEach(async link => {
                     const result: PageData = await scrapeInduvidualPage("https://w2prod.sis.yorku.ca" + link, broswer);
                     dataCleanser.cleanInduvidualPageData(result);
-                    console.log(result);
-                    index++;
-                    if(index === courseLinkURLS.length) {
-                        resolve(1);
+                    //console.log(result);
+                    if(result) {
+                        dynamoWriter.writeCourseToDB(result);
                     }
                 });
-           })
-
-           forEachLoopDone.then(async () => {
-               //console.log("\n" + "\n" + "\n" + "\n" + "\n" + "\n" + "COOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL" + "\n" + "\n" + "\n" + "\n" + "\n");
-               try{
-                   await broswer.close();
-               } catch(err){
-                   console.log("lol");
-               }
-           })
-
-
-        } catch(err){
-            console.log(err);
-            await page.close();
-            await broswer.close();
-        }
-        finally {
-           
-        }
-
-    })
-
+            } catch(err){
+                console.log(err);
+            }
+            finally {
+               
+            }
     
+        }
+    } catch(err) {
+
+    }
+
+
 
 
 }
@@ -197,7 +187,7 @@ export const scrapeInduvidualPage = async (link: string = "", broswer: Browser):
 
         return result;
    }catch(err){
-        broswer.close();
+        await broswer.close();
         console.log(err);
        return err;
    }
@@ -207,13 +197,13 @@ export const scrapeInduvidualPage = async (link: string = "", broswer: Browser):
 
 }
 
-export const scrapeAllCoursesAndFaculty = async (): Promise<Array<CourseFaculty>> => {
+export const scrapeAllCoursesAndFaculty = async (): Promise<Array<CourseFacultyOld>> => {
     const currBrowserPage: BroswerPage = await startBroswer("https://w2prod.sis.yorku.ca/Apps/WebObjects/cdm.woa/9/wo/bdC05ySbIixC6UitbTTrX0/1.3.10.7");
-    let result: Array<CourseFaculty> = [];
+    let result: Array<CourseFacultyOld> = [];
     try {
         //Get course name
         const [courseSelectTable] = await currBrowserPage.page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/form/table/tbody/tr[2]/td[2]/select");
-        const selectTableArr: Array<CourseFaculty> = await currBrowserPage.page.evaluate(parseSelectTableArr, courseSelectTable); 
+        const selectTableArr: Array<CourseFacultyOld> = await currBrowserPage.page.evaluate(parseSelectTableArr, courseSelectTable); 
         result = selectTableArr;
         
     } catch(err) {
@@ -240,8 +230,8 @@ const startBroswer = async (URL: string): Promise<BroswerPage> => {
     };
 }
 
-const parseSelectTableArr = (selectTable: Element): Promise<Array<CourseFaculty>> => {
-    const result: Array<CourseFaculty> = [];
+const parseSelectTableArr = (selectTable: Element): Promise<Array<CourseFacultyOld>> => {
+    const result: Array<CourseFacultyOld> = [];
     try {
         Array.from(selectTable.children).forEach((option:Element) => {
             const optionString: string = option?.innerHTML as string || "";

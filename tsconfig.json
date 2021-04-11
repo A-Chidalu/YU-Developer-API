@@ -4,7 +4,6 @@
       "module": "commonjs",
       "rootDir": "./",
       "outDir": "./build",
-      "esModuleInterop": true,
       "strict": true,
       "lib": ["esnext", "dom"],
       "noUnusedLocals": false,
@@ -12,5 +11,7 @@
       "noImplicitReturns": true,
       "noFallthroughCasesInSwitch": true,
       "resolveJsonModule": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true
     }
   }

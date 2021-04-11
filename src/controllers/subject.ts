@@ -30,7 +30,8 @@ export const getCourseAndFacultyData = async (req: Request, res: Response, next:
 }
 
 export const writeStuffToDB = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    await scraper.writeAllCoursesToDB();
-    res.send('That was nice!');
+    scraper.writeAllCoursesToDB().then(() => {
+        res.send("Done!");
+    }).catch(err => res.send(err));
 }
 
