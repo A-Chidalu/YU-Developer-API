@@ -5,6 +5,7 @@ import config from '../config/config';
 import * as dataCleanser from '../util/dataCleanser';
 import PageData from "../interfaces/PageData";
 import CourseFaculty from "../interfaces/CourseFaculty";
+import CourseFacultyOld from "../interfaces/CourseFacultyOld";
 /**
  * Get All subjects that York is offering in FW2021
  * @route GET 
@@ -24,7 +25,7 @@ export const getCourseData = async (req: Request, res: Response, next: NextFunct
 }
 
 export const getCourseAndFacultyData = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    let result:Array<CourseFaculty> = await scraper.scrapeAllCoursesAndFaculty();
+    let result:Array<CourseFacultyOld> = await scraper.scrapeAllCoursesAndFaculty();
     result = dataCleanser.cleanFaculty(result);
     res.json({data: result});
 }

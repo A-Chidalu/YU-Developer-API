@@ -2,6 +2,7 @@ import ClassTable from "../interfaces/ClassTable";
 import ClassTableRow from "../interfaces/ClassTableRow";
 import PageData from "../interfaces/PageData";
 import CourseFaculty from '../interfaces/CourseFaculty';
+import CourseFacultyOld from "../interfaces/CourseFacultyOld";
 
 
 export const cleanInduvidualPageData = (data: PageData): void => {
@@ -84,12 +85,12 @@ const cleanTableRow = (tableRow: ClassTableRow): void => {
 
 }
 
-export const cleanFaculty = (courseFacultyArr: Array<CourseFaculty>): Array<CourseFaculty> => {
+export const cleanFaculty = (courseFacultyArr: Array<CourseFacultyOld>): Array<CourseFacultyOld> => {
 
-    let result: Array<CourseFaculty> = [];
+    let result: Array<CourseFacultyOld> = [];
 
     courseFacultyArr.forEach(element => {
-        const tempObj:CourseFaculty = {
+        const tempObj:CourseFacultyOld = {
             faculty: getFirstFaculty(element.faculty),
             courseID: element.courseID
         }
@@ -99,7 +100,7 @@ export const cleanFaculty = (courseFacultyArr: Array<CourseFaculty>): Array<Cour
     return result;
 
     function getFirstFaculty(facultyString: string): string {
-        let facultyString: string = facultyString
+        //let facultyString: string = facultyString
         facultyString = facultyString.replace(/(\(|\))/gmi, "");
         facultyString = facultyString.trim();
         console.log(facultyString);
