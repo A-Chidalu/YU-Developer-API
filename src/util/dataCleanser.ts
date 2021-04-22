@@ -1,11 +1,11 @@
 import ClassTableOld from "../interfaces/ClassTableOld";
 import ClassTableRowOld from "../interfaces/ClassTableRowOld";
-import PageData from "../interfaces/PageData";
+import PageDataOld from "../interfaces/PageDataOld";
 import CourseFaculty from '../interfaces/CourseFaculty';
 import CourseFacultyOld from "../interfaces/CourseFacultyOld";
 
 
-export const cleanInduvidualPageData = (data: PageData): void => {
+export const cleanInduvidualPageData = (data: PageDataOld): void => {
     //Clean course name
     let newCourseName:string = data.courseName;
     newCourseName = newCourseName.replace(/&nbsp;/g, "");

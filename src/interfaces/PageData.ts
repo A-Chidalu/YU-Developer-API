@@ -1,6 +1,7 @@
-import ClassTableOld from './ClassTableOld';
+import ClassTable from "./ClassTable";
+
 export default interface PageData {
     courseName: string,
     courseDescription: string, 
-    pageTableData: Array<ClassTableOld>
+    pageTableData: Array<ClassTable>
 }

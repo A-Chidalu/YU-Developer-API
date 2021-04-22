@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import * as scraper from '../util/scraper';
 import config from '../config/config';
 import * as dataCleanser from '../util/dataCleanser';
-import PageData from "../interfaces/PageData";
+import PageDataOld from "../interfaces/PageDataOld";
 import CourseFaculty from "../interfaces/CourseFaculty";
 import CourseFacultyOld from "../interfaces/CourseFacultyOld";
 /**

@@ -3,7 +3,7 @@ import cheerio from 'cheerio';
 import Subject from '../interfaces/Subject';
 import puppeteer, { Browser, Page } from 'puppeteer';
 import BroswerPage from '../interfaces/BrowserPage';
-import PageData from '../interfaces/PageData';
+import PageDataOld from '../interfaces/PageDataOld';
 import ClassTableRowOld from '../interfaces/ClassTableRowOld';
 import ClassTableOld from '../interfaces/ClassTableOld';
 import CourseFaculty from '../interfaces/CourseFaculty';
@@ -68,7 +68,7 @@ export const writeAllCoursesToDB = async(): Promise<void> => {
                 
                 courseLinkURLS = await page.evaluate(getAllCourseLinksFromPage, courseTbody); 
                 courseLinkURLS.forEach(async link => {
-                    const result: PageData = await scrapeInduvidualPage("https://w2prod.sis.yorku.ca" + link, broswer);
+                    const result: PageDataOld = await scrapeInduvidualPage("https://w2prod.sis.yorku.ca" + link, broswer);
                     dataCleanser.cleanInduvidualPageData(result);
                     //console.log(result);
                     if(result) {
@@ -157,7 +157,7 @@ export const getCourseData = async (): Promise<void> => {
     browser.close();
 };
 
-export const scrapeInduvidualPage = async (link: string = "", broswer: Browser): Promise<PageData> => {
+export const scrapeInduvidualPage = async (link: string = "", broswer: Browser): Promise<PageDataOld> => {
     const FACULTY: string = "";
     const SUBJECT: string = "";
     const STUDY_SESSION: string = "";
@@ -178,7 +178,7 @@ export const scrapeInduvidualPage = async (link: string = "", broswer: Browser):
         //Get <tbody> that contains all the tables
         const [tBody] = await page.$x("/html/body/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td/table/tbody/tr/td/table[2]/tbody");
         const pageTableData = await page.evaluate(parseTableInfo, tBody);
-        const result:PageData = {
+        const result:PageDataOld = {
             courseName,
             courseDescription,
             pageTableData
