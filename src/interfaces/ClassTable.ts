@@ -1,4 +1,5 @@
-import ClassTableRow from './ClassTableRow'
+import ClassTableRow from "./ClassTableRow";
+
 export default interface ClassTable {
     sectionTerm: string,
     sectionLetter: string,

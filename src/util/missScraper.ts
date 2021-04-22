@@ -5,6 +5,7 @@ import * as fwCoursesData from '../../data/fwCoursesCopy.json';
 import CourseFacultyOld from '../interfaces/CourseFacultyOld';
 import CourseToCourseFacultyOld from '../interfaces/CourseToCourseFacultyOld';
 import PageData from '../interfaces/PageData';
+import ClassTable from '../interfaces/ClassTable';
 
 /**
  * In the case the db does not have the course inside it, we need to rescrape the york website and grab the page info
@@ -58,55 +59,68 @@ const grabMissedCourse = async (courseFaculty: CourseFacultyOld): Promise<void> 
 
     //For each table on the page
     $(`${mainTbodySelector} > tr`).each(function (i1, ele) {
+        const tempClassTable: ClassTable = {
+            sectionTerm: "",
+            sectionLetter: "",
+            sectionDirector: "",
+            rowInfo: []
+        }
         //For each of the three sections on each table
-        $(ele).find('td > table > tbody > tr').each(function(i2, iele) {
+        $(ele).find('td > table > tbody').eq(0).children().each(function(i2, iele) {
             if(i2 === 0) { //First tr in the table tbody
                 //Get the Term
-                console.log(`Term: ${$(iele).find('td > span > span').text()}`);
+                const term: string = $(iele).find('td > span > span').text();
+                console.log(`Term: ${term}`);
+                
                 
                 //Get the section 
-                console.log(`Section: ${$(iele).find('td > span').text()}`);
+                const section: string = $(iele).find('td > span').text();
+                console.log(`Section: ${section}`);
                 // console.log($(iele).find('td > span').text());
 
                 console.log("======================================================");
             } else if(i2 === 1) { //Second tr in the table tbody
                 //Get the Section Director
-                console.log(`Section Director: ${$(iele).find('td').text()}`);
+                const sectDirector: string = $(iele).find('td').text();
+                console.log(`Section Director: ${sectDirector}`);
 
                 // console.log($(iele).find('td').text());
                 console.log("======================================================");
 
             } else { //Third tr
                 //For each row of the third section of a table
-                $(iele).find('td > table > tbody > tr').each(function(i3, iiele) {
+                $(iele).find('td > table > tbody').eq(0).children().each(function(i3, iiele) {
                         if(i3 > 0) {
                             //Get lecture 
                             // console.log(`Type: ${$(iiele).find('td:nth-child(1)').text()}`);
-                            console.log(`Type: ${$(iiele).children().first().text()}`);
+                            const type: string = $(iiele).children().first().text();
+                            console.log(`Type: ${type}`);
 
 
-                            console.log("======================================================");
+                            //console.log("======================================================");
 
 
                             //Get Day, Start Time, Duraction Location
-                            $(iiele).find('td:nth-child(2) > table > tbody > tr').each(function(i4, iiiele) {
+                            $(iiele).find('td:nth-child(2) > table > tbody').eq(0).children().each(function(i4, iiiele) {
                                 console.log(`Day: ${$(iiiele).find("td:nth-child(1)").text()}`);
                                 console.log(`Start Time: ${$(iiiele).find("td:nth-child(2)").text()}`);
                                 console.log(`Duation: ${$(iiiele).find("td:nth-child(3)").text()}`);
                                 console.log(`Location: ${$(iiiele).find("td:nth-child(4)").text()}`);
-                                console.log("======================================================");
+                                //console.log("======================================================");
                             });
 
                             
-
-                            console.log(`Cat Num: ${$(iiele).find("td:nth-child(3)").text()}`);
+                            const catnum: string = $(iiele).find("td:nth-child(3)").text();
+                            console.log(`Cat Num: ${catnum}`);
                             
-                            console.log("======================================================");
+                            //console.log("======================================================");
 
+                            const instructor: string = $(iiele).find("td:nth-child(4)").text();
                             console.log(`Instructor: ${$(iiele).find("td:nth-child(4)").text()}`);
 
-                            console.log("======================================================");
+                            //console.log("======================================================");
 
+                            const notesAndAddtional: string = $(iiele).find("td:nth-child(5)").text();
                             console.log(`Notes & Additional: ${$(iiele).find("td:nth-child(5)").text()}`);
 
                             console.log("======================================================");

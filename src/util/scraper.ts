@@ -4,8 +4,8 @@ import Subject from '../interfaces/Subject';
 import puppeteer, { Browser, Page } from 'puppeteer';
 import BroswerPage from '../interfaces/BrowserPage';
 import PageData from '../interfaces/PageData';
-import ClassTableRow from '../interfaces/ClassTableRow';
-import ClassTable from '../interfaces/ClassTable';
+import ClassTableRowOld from '../interfaces/ClassTableRowOld';
+import ClassTableOld from '../interfaces/ClassTableOld';
 import CourseFaculty from '../interfaces/CourseFaculty';
 import CourseFacultyOld from '../interfaces/CourseFacultyOld';
 import * as fwCoursesData from '../../data/fwCourses.json';
@@ -250,13 +250,13 @@ const parseSelectTableArr = (selectTable: Element): Promise<Array<CourseFacultyO
     });
 }
 
-const parseTableInfo = (tBody:Element): Promise<Array<ClassTable>> => {
-    const pageTableData:Array<ClassTable> = [];
+const parseTableInfo = (tBody:Element): Promise<Array<ClassTableOld>> => {
+    const pageTableData:Array<ClassTableOld> = [];
     let tableCount: number = 0;
     try {
         Array.from(tBody.children).forEach((table:Element) => {
             tableCount++;
-            let tableData: ClassTable = {
+            let tableData: ClassTableOld = {
                 sectionTerm: "",
                 sectionLetter: "",
                 sectionDirector: "",
@@ -277,7 +277,7 @@ const parseTableInfo = (tBody:Element): Promise<Array<ClassTable>> => {
 
 
             for(let i = 1; i < mainTableElement!.children.length; i++) {
-                let tableRowObj: ClassTableRow = {
+                let tableRowObj: ClassTableRowOld = {
                     classType: "",
                     day: "",
                     startTime:"",

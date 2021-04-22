@@ -1,9 +1,8 @@
+import ClassTimeInfo from "./ClassTimeInfo";
+
 export default interface ClassTableRow {
     classType: string,
-    day: string,
-    startTime: string,
-    location: string,
-    duration: string,
+    classTimeInfo: Array<ClassTimeInfo>,
     catNum: string,
     instructor: string,
     notesOrAdditionalFees: string

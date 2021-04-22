@@ -1,5 +1,5 @@
-import ClassTable from "../interfaces/ClassTable";
-import ClassTableRow from "../interfaces/ClassTableRow";
+import ClassTableOld from "../interfaces/ClassTableOld";
+import ClassTableRowOld from "../interfaces/ClassTableRowOld";
 import PageData from "../interfaces/PageData";
 import CourseFaculty from '../interfaces/CourseFaculty';
 import CourseFacultyOld from "../interfaces/CourseFacultyOld";
@@ -23,7 +23,7 @@ export const cleanInduvidualPageData = (data: PageData): void => {
 
 }
 
-const cleanTable = (table: ClassTable): void => {
+const cleanTable = (table: ClassTableOld): void => {
 
     //Clean section term
     table.sectionTerm = table.sectionTerm.trim();
@@ -61,7 +61,7 @@ const cleanTable = (table: ClassTable): void => {
 
 }
 
-const cleanTableRow = (tableRow: ClassTableRow): void => {
+const cleanTableRow = (tableRow: ClassTableRowOld): void => {
 
     //Clean ClassType
     tableRow.classType = tableRow.classType?.trim().replace(/  /g, ' ');
