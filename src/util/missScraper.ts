@@ -8,6 +8,7 @@ import PageData from '../interfaces/PageData';
 import ClassTable from '../interfaces/ClassTable';
 import ClassTableRow from '../interfaces/ClassTableRow';
 import ClassTimeInfo from '../interfaces/ClassTimeInfo';
+import * as revisedDataCleaner from './revisedDataCleanser';
 
 /**
  * In the case the db does not have the course inside it, we need to rescrape the york website and grab the page info
@@ -73,13 +74,13 @@ const grabMissedCourse = async (courseFaculty: CourseFacultyOld): Promise<void> 
                 //Get the Term
                 const term: string = $(iele).find('td > span > span').text();
                 tempClassTable.sectionTerm = term;
-               // console.log(`Term: ${term}`);
+                // console.log(`Term: ${term}`);
 
 
                 //Get the section 
                 const section: string = $(iele).find('td > span').text();
                 tempClassTable.sectionLetter = section;
-               // console.log(`Section: ${section}`);
+                // console.log(`Section: ${section}`);
                 // console.log($(iele).find('td > span').text());
 
                 //console.log("======================================================");
@@ -87,7 +88,7 @@ const grabMissedCourse = async (courseFaculty: CourseFacultyOld): Promise<void> 
                 //Get the Section Director
                 const sectDirector: string = $(iele).find('td').text();
                 tempClassTable.sectionDirector = sectDirector;
-               // console.log(`Section Director: ${sectDirector}`);
+                // console.log(`Section Director: ${sectDirector}`);
 
                 // console.log($(iele).find('td').text());
                 //console.log("======================================================");
@@ -136,7 +137,7 @@ const grabMissedCourse = async (courseFaculty: CourseFacultyOld): Promise<void> 
 
                             const classLocation: string = $(iiiele).find("td:nth-child(4)").text();
                             tempClassTimeInfo.location = classLocation;
-                           // console.log(`Location: ${classLocation}`);
+                            // console.log(`Location: ${classLocation}`);
                             //console.log("======================================================");
 
                             tempClassTableRow.classTimeInfo.push(tempClassTimeInfo);
@@ -174,12 +175,8 @@ const grabMissedCourse = async (courseFaculty: CourseFacultyOld): Promise<void> 
         result.pageTableData.push(tempClassTable);
     })
 
-    //console.log(result.courseName);
-    //console.log(result.courseDescription);
-    // console.log(result);
-    // result.pageTableData.forEach(r => {
-    //     console.log(r.rowInfo);
-    // })
+    revisedDataCleaner.cleanInduvidualPageData(result);
+    console.dir(result, { depth: null });
     return;
 }
 

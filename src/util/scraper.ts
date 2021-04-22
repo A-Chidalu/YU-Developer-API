@@ -9,7 +9,7 @@ import ClassTableOld from '../interfaces/ClassTableOld';
 import CourseFaculty from '../interfaces/CourseFaculty';
 import CourseFacultyOld from '../interfaces/CourseFacultyOld';
 import * as fwCoursesData from '../../data/fwCourses.json';
-import * as dataCleanser from './dataCleanser';
+import * as dataCleanser from './dataCleanserOld';
 import * as dynamoWriter from '../db/writeCoursesToDB';
 
 

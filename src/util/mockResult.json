@@ -1,0 +1,386 @@
+{
+    "courseName": "LE/EECS 2030   3.00   Advanced Object Oriented Programming",
+    "courseDescription": "This course continues the separation of concern theme introduced in LE/EECS 1020 3.00 and LE/EECS1021 3.00. While 1020 and 1021 focuses on the client concern, this course focuses on the concern of the implementer. Hence, rather than using an API (Application Programming Interface) to build an application, the student is asked to implement a given API. Topics include implementing classes (non-utilities, delegation within the class definition, documentation and API generation, implementing contracts), aggregations (implementing aggregates versus compositions and implementing collections), inheritance hierarchies (attribute visibility, overriding methods, abstract classes versus interfaces, inner classes);\napplications of aggregation and inheritance in concurrent programming and event-driven programming; recursion; searching and sorting including quick and merge sorts); stacks and queues; linked lists; binary trees. Prerequisites: cumulative GPA of 4.50 or better over all major EECS courses (without second digit \"5\"); LE/EECS1021 3.00 or LE/EECS 1020 (prior to Fall 2015) 3.00 or LE/EECS1022 3.00 or LE/EECS 1720 3.00. Course credit exclusions: AP/ITEC 2620 3.00. Previously offered as: LE/EECS1030 3.00, LE/CSE 1030 3.00.",
+    "pageTableData": [
+        {
+            "sectionTerm": "Term F ",
+            "sectionLetter": "Term F      Section A",
+            "sectionDirector": "Please click here to see availability.Section Director: Marzieh Ahmadzadeh   ",
+            "rowInfo": [
+                {
+                    "classType": "LECT 01",
+                    "classTimeInfo": [
+                        {
+                            "day": "T",
+                            "startTime": "16:00",
+                            "duration": "90",
+                            "location": "  "
+                        },
+                        {
+                            "day": "R",
+                            "startTime": "16:00",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "9090 ",
+                    "instructor": "    Marzieh Ahmadzadeh",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                },
+                {
+                    "classType": "LAB  01",
+                    "classTimeInfo": [
+                        {
+                            "day": "M",
+                            "startTime": "16:00",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90S98G02",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                },
+                {
+                    "classType": "LAB  02",
+                    "classTimeInfo": [
+                        {
+                            "day": "M",
+                            "startTime": "17:30",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90S98G03",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                }
+            ]
+        },
+        {
+            "sectionTerm": "Term F ",
+            "sectionLetter": "Term F      Section B",
+            "sectionDirector": "Please click here to see availability.Section Director: Matthew J Kyan   ",
+            "rowInfo": [
+                {
+                    "classType": "LECT 01",
+                    "classTimeInfo": [
+                        {
+                            "day": "M",
+                            "startTime": "11:00",
+                            "duration": "90",
+                            "location": "  "
+                        },
+                        {
+                            "day": "W",
+                            "startTime": "11:00",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "9090 ",
+                    "instructor": "    Matthew J Kyan",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                },
+                {
+                    "classType": "LAB  01",
+                    "classTimeInfo": [
+                        {
+                            "day": "T",
+                            "startTime": "11:30",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90M45P02",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                },
+                {
+                    "classType": "LAB  02",
+                    "classTimeInfo": [
+                        {
+                            "day": "T",
+                            "startTime": "13:00",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90M45P03",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                }
+            ]
+        },
+        {
+            "sectionTerm": "Term F ",
+            "sectionLetter": "Term F      Section C",
+            "sectionDirector": "Please click here to see availability.Section Director: Hui Wang   ",
+            "rowInfo": [
+                {
+                    "classType": "LECT 01",
+                    "classTimeInfo": [
+                        {
+                            "day": "T",
+                            "startTime": "17:30",
+                            "duration": "90",
+                            "location": "  "
+                        },
+                        {
+                            "day": "R",
+                            "startTime": "17:30",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "9090 ",
+                    "instructor": "    Hui Wang",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                },
+                {
+                    "classType": "LAB  01",
+                    "classTimeInfo": [
+                        {
+                            "day": "W",
+                            "startTime": "17:30",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90F92B02",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                },
+                {
+                    "classType": "LAB  02",
+                    "classTimeInfo": [
+                        {
+                            "day": "W",
+                            "startTime": "17:30",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90F92B03",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                },
+                {
+                    "classType": "LAB  03",
+                    "classTimeInfo": [
+                        {
+                            "day": "W",
+                            "startTime": "17:30",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90F92B04",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                }
+            ]
+        },
+        {
+            "sectionTerm": "Term F ",
+            "sectionLetter": "Term F      Section E",
+            "sectionDirector": "Please click here to see availability.Section Director: Marzieh Ahmadzadeh   ",
+            "rowInfo": [
+                {
+                    "classType": "LECT 01",
+                    "classTimeInfo": [
+                        {
+                            "day": "T",
+                            "startTime": "13:00",
+                            "duration": "90",
+                            "location": "  "
+                        },
+                        {
+                            "day": "R",
+                            "startTime": "13:00",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "9090 ",
+                    "instructor": "    Marzieh Ahmadzadeh",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                },
+                {
+                    "classType": "LAB  01",
+                    "classTimeInfo": [
+                        {
+                            "day": "M",
+                            "startTime": "14:30",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90W39J02",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                },
+                {
+                    "classType": "LAB  02",
+                    "classTimeInfo": [
+                        {
+                            "day": "R",
+                            "startTime": "17:30",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90W39J03",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                },
+                {
+                    "classType": "LAB  03",
+                    "classTimeInfo": [
+                        {
+                            "day": "F",
+                            "startTime": "18:30",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90W39J04",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                },
+                {
+                    "classType": "LAB  04",
+                    "classTimeInfo": [
+                        {
+                            "day": "M",
+                            "startTime": "14:30",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90W39J05",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "This course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted. "
+                }
+            ]
+        },
+        {
+            "sectionTerm": "Term W ",
+            "sectionLetter": "Term W      Section M",
+            "sectionDirector": "Please click here to see availability.Section Director: Yves Lesperance   ",
+            "rowInfo": [
+                {
+                    "classType": "LECT 01",
+                    "classTimeInfo": [
+                        {
+                            "day": "T",
+                            "startTime": "13:00",
+                            "duration": "90",
+                            "location": "  "
+                        },
+                        {
+                            "day": "R",
+                            "startTime": "13:00",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "9090 ",
+                    "instructor": "    Yves Lesperance",
+                    "notesOrAdditionalFees": "$0.00 - Course MaterialsThis course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted.\n "
+                },
+                {
+                    "classType": "LAB  01",
+                    "classTimeInfo": [
+                        {
+                            "day": "W",
+                            "startTime": "11:00",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90P86S02",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "$0.00 - Course MaterialsThis course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted.\n "
+                },
+                {
+                    "classType": "LAB  02",
+                    "classTimeInfo": [
+                        {
+                            "day": "W",
+                            "startTime": "11:00",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90P86S03",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "$0.00 - Course MaterialsThis course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted.\n "
+                },
+                {
+                    "classType": "LAB  03",
+                    "classTimeInfo": [
+                        {
+                            "day": "W",
+                            "startTime": "11:00",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90P86S04",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "$0.00 - Course MaterialsThis course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted.\n "
+                }
+            ]
+        },
+        {
+            "sectionTerm": "Term W ",
+            "sectionLetter": "Term W      Section Z",
+            "sectionDirector": "Please click here to see availability.Section Director: Marzieh Ahmadzadeh   ",
+            "rowInfo": [
+                {
+                    "classType": "LECT 01",
+                    "classTimeInfo": [
+                        {
+                            "day": "T",
+                            "startTime": "16:00",
+                            "duration": "180",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "180 ",
+                    "instructor": "  Marzieh Ahmadzadeh",
+                    "notesOrAdditionalFees": "$0.00 - Course MaterialsThis course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted.\n "
+                },
+                {
+                    "classType": "LAB  01",
+                    "classTimeInfo": [
+                        {
+                            "day": "M",
+                            "startTime": "15:30",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90J33E02",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "$0.00 - Course MaterialsThis course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted.\n "
+                },
+                {
+                    "classType": "LAB  02",
+                    "classTimeInfo": [
+                        {
+                            "day": "M",
+                            "startTime": "17:00",
+                            "duration": "90",
+                            "location": "  "
+                        }
+                    ],
+                    "catNum": "90J33E03",
+                    "instructor": "   ",
+                    "notesOrAdditionalFees": "$0.00 - Course MaterialsThis course will be offered through remote/online delivery and can have synchronous sessions during the day and time noted.\n "
+                }
+            ]
+        }
+    ]
+}
