@@ -14,7 +14,7 @@ export const cleanInduvidualPageData = (data: PageData): void => {
 
     //Clean courseDescription
     let newCourseDescription = data.courseDescription;
-    //newCourseDescription = newCourseDescription.replace(/[\r\n]/g, '');
+    newCourseDescription = newCourseDescription.replace(/[\r\n]/g, '');
     data.courseDescription = newCourseDescription;
 
     //Clean tables in page

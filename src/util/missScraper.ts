@@ -9,24 +9,29 @@ import ClassTable from '../interfaces/ClassTable';
 import ClassTableRow from '../interfaces/ClassTableRow';
 import ClassTimeInfo from '../interfaces/ClassTimeInfo';
 import * as revisedDataCleaner from './revisedDataCleanser';
+import * as CourseUtil from "./courseUtils";
+import Course from '../interfaces/Course';
+
 
 /**
- * In the case the db does not have the course inside it, we need to rescrape the york website and grab the page info
  * 
- * @param courseFaculty 
- * @returns {PageDataOld} - A Obj Representing all the data on the page
+ * @param subject {String} subject ex: EECS, ARTH, HIST
+ * @param faculty {String} faculty course is in ex: LE, AP, GS, etc
+ * @returns {PageData} The Data Scrapped from that specific course
  */
-const grabMissedCourse = async (courseFaculty: CourseFacultyOld): Promise<void> => {
+export const grabCourseData = async (courseID: string, faculty: string): Promise<PageData | null> => {
     //console.log(LinkUtil.getRootYorkLink(courseFaculty, "fw"));
+    const subject: string = CourseUtil.getSubject(courseID);
+    const fullCourse: Course = CourseUtil.getFullCourse(courseID);
+    const courseFaculty: CourseFacultyOld = { faculty, courseID: subject }; 
     let { data }: AxiosResponse<any> = await axios.get(LinkUtil.getRootYorkLink(courseFaculty, "fw"));
     let $: cheerio.Root = cheerio.load(data);
     const tBodySelector: string = "body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td > table:nth-child(3) > tbody";
-    const courseNum: string = "2030";
     let link: string = "";
 
     //SELECT ALL tr's that are DESCENDANTS of tBody
     $(tBodySelector + " > tr").each(function (i, ele) {
-        if ($(ele).children().first().text().includes("EECS 2030")) {
+        if ($(ele).children().first().text().includes(`${fullCourse.subject} ${fullCourse.subjectNum}`)) {
             //console.log($(ele).find('td:nth-child(3)').html());
             //console.log($($(ele).find('td:nth-child(3)').html()).attr('href'));
             //Messy way of getting the href, might need to fix later
@@ -40,7 +45,7 @@ const grabMissedCourse = async (courseFaculty: CourseFacultyOld): Promise<void> 
         console.log(link);
     }
     else {
-        return;
+        return null;
     }
 
     const specificCoursePage: AxiosResponse<any> = await axios.get(link);
@@ -59,6 +64,10 @@ const grabMissedCourse = async (courseFaculty: CourseFacultyOld): Promise<void> 
     result.courseDescription = $(courseDescriptionSelector).text();
 
     const mainTbodySelector: string = "body > table > tbody > tr:nth-child(2) > td:nth-child(2) > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td > table:nth-child(9) > tbody";
+
+    if($(mainTbodySelector).length <= 0) {
+        return null;
+    }
 
     //For each table on the page
     $(`${mainTbodySelector} > tr`).each(function (i1, ele) {
@@ -177,7 +186,7 @@ const grabMissedCourse = async (courseFaculty: CourseFacultyOld): Promise<void> 
 
     revisedDataCleaner.cleanInduvidualPageData(result);
     console.dir(result, { depth: null });
-    return;
+    return result;
 }
 
 /**
@@ -198,5 +207,5 @@ const getFaculty = (subject: string): CourseFacultyOld => {
 
 
 
-grabMissedCourse({ faculty: 'LE', courseID: 'EECS' });
+
 
