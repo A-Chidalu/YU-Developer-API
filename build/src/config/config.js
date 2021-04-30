@@ -23,5 +23,5 @@ const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 exports.default = {
     port: process.env.PORT,
-    SUBJECTS_URL: process.env.URL
+    SUBJECTS_URL: process.env.SUBJECTS_URL
 };

@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
+      "outDir": "build",
       "target": "es6",
       "module": "commonjs",
-      "rootDir": "./",
-      "outDir": "./build",
+      "rootDir": ".",
       "strict": true,
       "lib": ["esnext", "dom"],
       "noUnusedLocals": false,

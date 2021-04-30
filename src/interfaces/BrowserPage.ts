@@ -1,6 +1,6 @@
-import { Browser, Page } from "puppeteer";
+// import { Browser, Page } from "puppeteer";
 
-export default interface BroswerPage {
-    broswer: Browser,
-    page: Page
-}
+// export default interface BroswerPage {
+//     broswer: Browser,
+//     page: Page
+// }

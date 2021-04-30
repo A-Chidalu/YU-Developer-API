@@ -27,19 +27,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSubjects = void 0;
-const scraper = __importStar(require("../util/scraper"));
-const config_1 = __importDefault(require("../config/config"));
+exports.getCourseData = exports.getSubjects = void 0;
+const CourseGrabberUtil = __importStar(require("../util/missScraper"));
 /**
  * Get All subjects that York is offering in FW2021
  * @route GET
  */
 const getSubjects = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let URL = config_1.default.SUBJECTS_URL;
-    res.json({ subjects: scraper.getSubjectData(URL) });
+    // let URL:string = config.SUBJECTS_URL as string;
+    // //console.log(URL || "That didnt work lol");
+    // const result = await scraper.getSubjectData(URL);
+    res.json({ subjects: "result" });
 });
 exports.getSubjects = getSubjects;
+const getCourseData = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const faculty = req.query.faculty;
+    const courseID = req.query.courseID;
+    const data = yield CourseGrabberUtil.grabCourseData(courseID, faculty);
+    if (!data) {
+        res.json({ "error": "Please follow api instructions for how to search for a course." + ` ${courseID} with faculty ${faculty} is most likley not a valid course` });
+    }
+    else {
+        res.json({ data });
+    }
+});
+exports.getCourseData = getCourseData;
+// export const getCourseAndFacultyData = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+//     let result:Array<CourseFacultyOld> = await scraper.scrapeAllCoursesAndFaculty();
+//     result = dataCleanser.cleanFaculty(result);
+//     res.json({data: result});
+// }
+// export const writeStuffToDB = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+//     scraper.writeAllCoursesToDB().then(() => {
+//         res.send("Done!");
+//     }).catch(err => res.send(err));
+// }

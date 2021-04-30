@@ -24,12 +24,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const subjectController = __importStar(require("./src/controllers/subject"));
-const config_1 = __importDefault(require("./src/config/config"));
 // rest of the code remains same
 const app = express_1.default();
+//app.use(express.json());
 //Using a Typescript Assertion here
-const PORT = parseInt(config_1.default.port, 10) || 8080;
+const PORT = process.env.PORT || "8080";
 app.get('/', subjectController.getSubjects);
+app.get('/course', subjectController.getCourseData);
+// app.get('/courses/data', subjectController.getCourseData);
+// app.get('/coursesAndFaculty', subjectController.getCourseAndFacultyData);
+// app.get('/write', subjectController.writeStuffToDB);
 app.listen(PORT, () => {
-    console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
+    console.log(`[server]: Server is running at http://localhost:${PORT}`);
 });

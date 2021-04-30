@@ -5,7 +5,7 @@ import config from './src/config/config'
 const app = express();
 //app.use(express.json());
 //Using a Typescript Assertion here
-const PORT: number = parseInt(config.port as string, 10) || 8080;
+const PORT: string = process.env.PORT || "8080";
 
 
 app.get('/', subjectController.getSubjects);
