@@ -185,7 +185,7 @@ export const grabCourseData = async (courseID: string, faculty: string): Promise
     })
 
     revisedDataCleaner.cleanInduvidualPageData(result);
-    console.dir(result, { depth: null });
+    //console.dir(result, { depth: null });
     return result;
 }
 

@@ -27,7 +27,7 @@ export const getCourseData = async (req: Request, res: Response, next: NextFunct
     const data: PageData | null = await CourseGrabberUtil.grabCourseData(courseID, faculty);
 
     if(!data) {
-        res.json({"error": "Please follow api instructions for how to search for a course." + ` ${courseID} with faculty ${faculty} is most likley not a valid course`})
+        res.json({"error": "Please follow api instructions for how to search for a course." + `Course: ${courseID} with faculty ${faculty} is most likley not a valid course`})
     }
     else {
         res.json({data});

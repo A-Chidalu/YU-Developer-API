@@ -4,7 +4,7 @@
   "description": "An API to access information about course offerings, professor information, and prerequisite information from york university courses website",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.js",
+    "start": "node build/server.js",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "npm run build && npm run start"
