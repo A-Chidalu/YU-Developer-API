@@ -46,7 +46,7 @@ const getCourseData = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     const courseID = req.query.courseID;
     const data = yield CourseGrabberUtil.grabCourseData(courseID, faculty);
     if (!data) {
-        res.json({ "error": "Please follow api instructions for how to search for a course." + ` ${courseID} with faculty ${faculty} is most likley not a valid course` });
+        res.json({ "error": "Please follow api instructions for how to search for a course." + `Course: ${courseID} with faculty ${faculty} is most likley not a valid course` });
     }
     else {
         res.json({ data });
